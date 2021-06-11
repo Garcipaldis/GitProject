@@ -44,14 +44,15 @@ df_top10 = df_total.nlargest(10, "Deaths")
 top10_countries_3 = df_top10["Country_Region"].tolist()
 top10_deaths = df_top10["Deaths"].tolist()
 
-fig = make_LO_QUE_TE_DE_LA_GANA(
+fig = make_subplots(
 rows = 4, cols = 6,
 specs=[
 [{"type": "scattergeo", "rowspan": 4, "colspan": 3},
 None, None, {"type": "indicator"}, {"type": "indicator"},
 {"type": "indicator"} ],
 [ None, None, None, {"type": "bar",
-"colspan":3}, None, None],[ None, None, None, {"type": "bar",
+"colspan":3}, None, None],
+[ None, None, None, {"type": "bar",
 "colspan":3}, None, None],
 [ None, None, None, {"type": "bar",
 "colspan":3}, None, None],
@@ -67,8 +68,7 @@ message += "Recovered: " + df_final["Recovered"].astype(str) +
 message += "Last updated: " + df_final["Last_Update"].astype(str)
 df_final["text"] = message
 fig.add_trace(
-go.Scattergeo(
-locationmode = "country names",
+go.Scattergeo(locationmode = "country names",
 lon = df_final["Long_"],
 lat = df_final["Lat"],
 hovertext = df_final["text"],
@@ -89,7 +89,8 @@ cmax = df_final['Confirmed'].max(),
 colorbar_title="Confirmed Cases<br>Latest Update",
 colorbar_x = -0.05
 )
-),row=1, col=1
+),
+row=1, col=1
 )
 fig.add_trace(
 go.Indicator(
@@ -105,8 +106,7 @@ mode="number",
 value=total_recovered,
 title="Recovered Cases",
 ),
-row=1, col=5
-)
+row=1, col=5)
 fig.add_trace(
 go.Indicator(
 mode="number",
@@ -125,7 +125,8 @@ showlegend=True,
 ),
 row=2, col=4
 )
-fig.add_trace(go.Bar(
+fig.add_trace(
+go.Bar(
 x=top10_countries_2,
 y=top10_recovered,
 name= "Recovered Cases",
@@ -141,8 +142,7 @@ name= "Deaths Cases",
 marker=dict(color="crimson"),
 showlegend=True),
 row=4, col=4
-)
-fig.update_layout(
+)fig.update_layout(
 template="plotly_dark",
 title = "Global COVID-19 Cases (Last Updated: " +
 str(df_final["Last_Update"][0]) + ")",
@@ -163,7 +163,8 @@ text="Source: https://bit.ly/3aEzxjK",
 showarrow=False,
 xref="paper",
 yref="paper",
-x=0.35,y=0)
+x=0.35,
+y=0)
 ]
 )
-fig.write_html('templates/quedivertidoesesteejercicio.html')
+fig.write_html('templates/dashboard.html')
