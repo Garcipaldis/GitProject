@@ -37,12 +37,12 @@ dataframes = []
         -3.691725
         response = requests.get(overpass_url, params={'data':
         overpass_query})
-    try:
-        data = response.json()
-        df = json_to_df(data)
-        dataframes.append(df)
-    except:
-        continue
+        try:
+            data = response.json()
+            df = json_to_df(data)
+            dataframes.append(df)
+        except:
+            continue
     health_csv = pd.concat(dataframes)
     coordenadas_TB = (40.421703,-3.691725)
     some_map2 = folium.Map(location=coordenadas_TB, zoom_start=14)
